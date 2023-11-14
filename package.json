@@ -1,0 +1,38 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run schemas && npm run copyfiles && tsc -w & nodemon dist/app.js",
+    "dev:win": "npm run schemas && npm run copyfiles && start /b tsc -w & nodemon --config nodemon.win.json dist/app.js",
+    "schemas": "npm run schemas:openapi && npm run schemas:types",
+    "schemas:openapi": "swagger-jsdoc -d src/routes/definition.yaml src/routes/*.ts \"src/routes/!(definition).yaml\" -o src/schemas/openapi.json",
+    "schemas:types": "openapi-typescript src/schemas/openapi.json -o src/schemas/index.d.ts",
+    "copyfiles": "copyfiles -u 1 src/schemas/*.json dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "@types/chalk": "^2.2.0",
+    "chalk": "^4.1.2",
+    "D": "^1.0.0",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-openapi-validator": "^5.1.0",
+    "mongodb": "^6.2.0",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/swagger-ui-express": "^4.1.6",
+    "copyfiles": "^2.4.1",
+    "nodemon": "^3.0.1",
+    "openapi-typescript": "^6.7.1",
+    "swagger-jsdoc": "^6.2.8",
+    "typescript": "^5.2.2"
+  }
+}
