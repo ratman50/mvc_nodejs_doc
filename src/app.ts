@@ -1,6 +1,8 @@
-import  express from "express";
+import  express, { NextFunction } from "express";
+import createHttpError from "http-errors";
 import "express-async-errors";
-import { logger } from "./middlewares";
+import { logger, addTimestamp, errorHandler } from "./middlewares";
+import { healthRouter } from "./routes";
 
 
 
@@ -8,5 +10,26 @@ const app = express();
 const port=3000;
 
 app.use(express.json());
-
+app.use(addTimestamp);
 app.use(logger);
+
+
+
+
+
+
+app.use("/health", healthRouter);
+
+
+app.use((req, res, next:NextFunction)=>{
+    
+    next(createHttpError(404, "Route not found"));
+});
+app.use(errorHandler);
+
+
+
+
+app.listen(port,()=>{
+    console.log(`Server is running on  url  http://localhost:${port}/`);
+});
