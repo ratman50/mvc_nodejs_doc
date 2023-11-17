@@ -16,15 +16,18 @@ app.use(logger);
 
 
 
-
+//defining routes
 
 app.use("/health", healthRouter);
 
 
+//handle route not defined
 app.use((req, res, next:NextFunction)=>{
     
     next(createHttpError(404, "Route not found"));
 });
+
+
 app.use(errorHandler);
 
 
