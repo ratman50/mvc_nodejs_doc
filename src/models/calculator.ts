@@ -3,8 +3,8 @@ import { CalculatorCommand, CalculatorCommandOperator, CalculatorMetadata, Calcu
 export class Calculator{
     constructor(
         public command:CalculatorCommand,
-        public metadata:CalculatorMetadata,
-        public result:CalculatorResult
+        public metadata?:CalculatorMetadata,
+        public result?:CalculatorResult
     ){
         this.execute();
         this.validate();
