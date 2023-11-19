@@ -8,29 +8,29 @@ export class CalculatorRouter {
 
      constructor(private calculatorController: CalculatorController) {
           this.router = Router();
-          this.getCalculators();
+          this.getAllCalculations();
      }
 
-     private getCalculators() {
+     private getAllCalculations() {
           /**
            * @openapi
-           * /calculator
+           * /calculator:
            *   get:
-           *      description: Get all calculations
-           *      operationId:getAllCalculations
-           *      tags:
-           *        - calculator
-           *      responses:
-           *        '200':
-           *           description:OK
-           *           content:
-           *               application/json:
-           *                 schema:
-           *                    type:array
-           *                    items:
-           *                       $ref:'#/components/schemas/CalculatorResult
-           *         '500':
-           *           $ref:'#/components/responses/InternalServiceError
+           *     description: Récupère tous les calculs
+           *     operationId: getAllCalculations
+           *     tags:
+           *       - calculator
+           *     responses:
+           *       '200':
+           *         description: OK
+           *         content:
+           *           application/json:
+           *             schema:
+           *               type: array
+           *               items:
+           *                 $ref: "#/components/schemas/CalculatorResult"
+           *       '500':
+           *         $ref: '#/components/responses/InternalServerError'
            */
           this.router.get("/", async (req: Request<{}, CalculatorResultDto>, res) => {
             // res.send("going to CalculatorController")

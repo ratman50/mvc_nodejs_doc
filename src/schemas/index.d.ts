@@ -4,7 +4,16 @@
  */
 
 
-export type paths = Record<string, never>;
+export interface paths {
+  "/calculator": {
+    /** @description Récupère tous les calculs */
+    get: operations["getAllCalculations"];
+  };
+  "/health": {
+    /** @description Health check endpoint for calculator API */
+    get: operations["healthCheck"];
+  };
+}
 
 export type webhooks = Record<string, never>;
 
@@ -32,13 +41,13 @@ export interface components {
     ErrorModel: {
       message: string;
     };
-    /** @description Health check status */
+    /** @description health check status */
     HealthStatus: {
       /** @enum {string} */
       status: "OK";
       /**
        * @description Number of milliseconds since Epoch time
-       * @example 1688612539479
+       * @example 15588612539479
        */
       timestamp: number;
     };
@@ -77,4 +86,30 @@ export type $defs = Record<string, never>;
 
 export type external = Record<string, never>;
 
-export type operations = Record<string, never>;
+export interface operations {
+
+  /** @description Récupère tous les calculs */
+  getAllCalculations: {
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["CalculatorResult"][];
+        };
+      };
+      500: components["responses"]["InternalServerError"];
+    };
+  };
+  /** @description Health check endpoint for calculator API */
+  healthCheck: {
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["HealthStatus"];
+        };
+      };
+      500: components["responses"]["InternalServerError"];
+    };
+  };
+}

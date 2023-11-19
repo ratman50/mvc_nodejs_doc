@@ -18,7 +18,77 @@
     "url": "https://www.youtube.com/@NerdiCoda",
     "description": "My calculator documentation"
   },
-  "paths": {},
+  "servers": [
+    {
+      "url": "http://{server_url}:{port}/api",
+      "variables": {
+        "server_url": {
+          "default": "localhost"
+        },
+        "port": {
+          "enum": [
+            "4003",
+            "2000"
+          ],
+          "default": "3000"
+        }
+      },
+      "description": "This is my calculator server"
+    }
+  ],
+  "paths": {
+    "/calculator": {
+      "get": {
+        "description": "Récupère tous les calculs",
+        "operationId": "getAllCalculations",
+        "tags": [
+          "calculator"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalculatorResult"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Health check endpoint for calculator API",
+        "operationId": "healthCheck",
+        "tags": [
+          "health"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "schemas": {
       "CalculatorCommand": {
@@ -92,7 +162,7 @@
         }
       },
       "HealthStatus": {
-        "description": "Health check status",
+        "description": "health check status",
         "type": "object",
         "required": [
           "status",
@@ -108,7 +178,7 @@
           "timestamp": {
             "type": "integer",
             "description": "Number of milliseconds since Epoch time",
-            "example": 1688612539479
+            "example": 15588612539479
           }
         }
       }

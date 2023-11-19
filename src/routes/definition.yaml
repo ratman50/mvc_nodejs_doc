@@ -10,3 +10,15 @@ tags:
 externalDocs:
   url: https://www.youtube.com/@NerdiCoda
   description: My calculator documentation
+
+servers:
+  - url: http://{server_url}:{port}/api
+    variables:
+      server_url:
+        default: localhost
+      port:
+        enum:
+         - '4003'
+         - '2000'
+        default: '3000'
+    description: This is my calculator server
